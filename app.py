@@ -1,5 +1,6 @@
 import streamlit as st
 import matplotlib.pyplot as plt
+import pandas as pd
 
 # ==========================================================
 # TAMPILAN WEBSITE (STREAMLIT)
@@ -10,28 +11,35 @@ st.title("📊 Aplikasi Penjadwalan FCFS — Flow Shop 2 Mesin")
 st.write("Dibuat oleh: Mahasiswa Teknik Industri Semester 6")
 st.markdown("---")
 
-# 1. INPUT DATA (Sesuai Gambar Studi Kasus Bengkel Furnitur)
-daftar_job = [
-    ["J1", "Rak Buku",     0, 4, 3, 10],
-    ["J2", "Meja Belajar", 1, 6, 5, 18],
-    ["J3", "Kursi Lipat",  3, 3, 4, 14],
-    ["J4", "Lemari Mini",  5, 5, 6, 22],
-    ["J5", "Meja TV",      7, 4, 3, 25]
-]
+st.subheader("📋 Input Data & Kebutuhan Waktu (Silakan Edit Angka di Bawah Ini)")
+st.info("💡 **Tips:** Kamu bisa mengklik langsung sel angka di bawah ini untuk mengubah nilai *Arrival Time*, *Processing Time*, atau *Due Date*. Hasil di bawah akan langsung berubah otomatis!")
 
-# Tampilkan data awal di website
-st.subheader("📋 Data Awal Studi Kasus (Bengkel Furnitur)")
-st.table({
-    "Job": [j[0] for j in daftar_job],
-    "Produk": [j[1] for j in daftar_job],
-    "Arrival Time": [j[2] for j in daftar_job],
-    "PT Mesin 1": [j[3] for j in daftar_job],
-    "PT Mesin 2": [j[4] for j in daftar_job],
-    "Due Date": [j[5] for j in daftar_job]
-})
+# 1. MENYIAPKAN DATA AWAL DALAM BENTUK DATAFRAME PANDAS
+if 'df_sumber' not in st.session_state:
+    # Kita buat cetakan data awal terlebih dahulu
+    data_awal = {
+        "Job": ["J1", "J2", "J3", "J4", "J5"],
+        "Produk": ["Rak Buku", "Meja Belajar", "Kursi Lipat", "Lemari Mini", "Meja TV"],
+        "Arrival Time": [0, 1, 3, 5, 7],
+        "PT Mesin 1": [4, 6, 3, 5, 4],
+        "PT Mesin 2": [3, 5, 4, 6, 3],
+        "Due Date": [10, 18, 14, 22, 25]
+    }
+    st.session_state.df_sumber = pd.DataFrame(data_awal)
+
+# MENGGUNAKAN st.data_editor AGAR TABEL BISA DI-EDIT OLEH USER
+df_di_edit = st.data_editor(
+    st.session_state.df_sumber, 
+    use_container_width=True,
+    num_rows="fixed", # Mengunci jumlah baris agar tetap 5 job
+    disabled=["Job", "Produk"] # Mengunci nama produk agar yang bisa diedit hanya angka parameternya saja
+)
+
+# MENGUBAH KEMBALI DATAFRAME YANG SUDAH DI-EDIT MENJADI FORMAT LIST 'daftar_job' SEPERTI KODINGANMU
+daftar_job = df_di_edit.values.tolist()
 
 # ==========================================================
-# LOGIKA PERHITUNGAN
+# LOGIKA PERHITUNGAN (Sama persis dengan logika asli milikmu)
 # ==========================================================
 daftar_job.sort(key=lambda x: x[2]) # Urutkan berdasarkan AT
 
