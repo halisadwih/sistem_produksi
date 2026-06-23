@@ -7,7 +7,7 @@ import pandas as pd
 # ==========================================================
 st.set_page_config(page_title="Sisprod Scheduling App", layout="wide")
 
-st.title("📊 Aplikasi Penjadwalan FCFS — Flow Shop 2 Mesin")
+st.title("📊 Aplikasi Penjadwalan FCFS")
 st.write("Dibuat oleh: Halisa Dwi Humaira")
 st.markdown("---")
 
