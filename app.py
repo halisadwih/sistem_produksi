@@ -92,9 +92,6 @@ kpi3.metric(label="Produk Terlambat", value=f"{jumlah_terlambat} / {len(daftar_j
 st.dataframe(hasil_tabel, use_container_width=True)
 
 # ==========================================================
-# MEMBUAT GRAPH / GANTT CHART
-# ==========================================================
-# ==========================================================
 # MEMBUAT GRAPH / GANTT CHART (DENGAN TOMBOL)
 # ==========================================================
 st.subheader("🖼️ Visualisasi Gantt Chart")
@@ -128,6 +125,3 @@ if st.button("📊 Tampilkan Gantt Chart", type="primary"):
     st.pyplot(fig)
 else:
     st.info("Klik tombol merah/biru di atas untuk melihat visualisasi jadwal lini produksi.")
-
-# Tampilkan grafik matplotlib di web Streamlit
-st.pyplot(fig)
