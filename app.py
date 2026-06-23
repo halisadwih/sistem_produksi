@@ -94,29 +94,40 @@ st.dataframe(hasil_tabel, use_container_width=True)
 # ==========================================================
 # MEMBUAT GRAPH / GANTT CHART
 # ==========================================================
+# ==========================================================
+# MEMBUAT GRAPH / GANTT CHART (DENGAN TOMBOL)
+# ==========================================================
 st.subheader("🖼️ Visualisasi Gantt Chart")
 
-fig, ax = plt.subplots(figsize=(12, 4.5))
-warna_job = {"J1": "#4E79A7", "J2": "#F28E2B", "J3": "#E15759", "J4": "#76B7B2", "J5": "#59A14F"}
+# Buat tombol pemicu di sini
+if st.button("📊 Tampilkan Gantt Chart", type="primary"):
+    
+    fig, ax = plt.subplots(figsize=(12, 4.5))
+    warna_job = {"J1": "#4E79A7", "J2": "#F28E2B", "J3": "#E15759", "J4": "#76B7B2", "J5": "#59A14F"}
 
-for baris in timeline_m1:
-    kode, produk, start, durasi = baris
-    ax.broken_barh([(start, durasi)], (15, 3), facecolors=warna_job[kode], edgecolor='black')
-    ax.text(start + durasi/2, 16.5, f"{kode}\n({produk})", ha='center', va='center', color='white', fontweight='bold', fontsize=9)
+    for baris in timeline_m1:
+        kode, produk, start, durasi = baris
+        ax.broken_barh([(start, durasi)], (15, 3), facecolors=warna_job[kode], edgecolor='black')
+        ax.text(start + durasi/2, 16.5, f"{kode}\n({produk})", ha='center', va='center', color='white', fontweight='bold', fontsize=9)
 
-for baris in timeline_m2:
-    kode, produk, start, durasi = baris
-    ax.broken_barh([(start, durasi)], (7, 3), facecolors=warna_job[kode], edgecolor='black')
-    ax.text(start + durasi/2, 8.5, f"{kode}\n({produk})", ha='center', va='center', color='white', fontweight='bold', fontsize=9)
+    for baris in timeline_m2:
+        kode, produk, start, durasi = baris
+        ax.broken_barh([(start, durasi)], (7, 3), facecolors=warna_job[kode], edgecolor='black')
+        ax.text(start + durasi/2, 8.5, f"{kode}\n({produk})", ha='center', va='center', color='white', fontweight='bold', fontsize=9)
 
-ax.set_ylim(4, 21)
-ax.set_xlim(0, makespan + 2)
-ax.set_xlabel('Garis Waktu / Timeline Produksi', fontsize=10, fontweight='bold')
-ax.set_yticks([16.5, 8.5])
-ax.set_yticklabels(['Mesin 1\n(Potong CNC)', 'Mesin 2\n(Finishing/Cat)'], fontsize=10, fontweight='bold')
-ax.set_xticks(range(0, makespan + 3, 2))
-ax.grid(True, axis='x', linestyle='--', alpha=0.5)
-plt.tight_layout()
+    ax.set_ylim(4, 21)
+    ax.set_xlim(0, makespan + 2)
+    ax.set_xlabel('Garis Waktu / Timeline Produksi', fontsize=10, fontweight='bold')
+    ax.set_yticks([16.5, 8.5])
+    ax.set_yticklabels(['Mesin 1\n(Potong CNC)', 'Mesin 2\n(Finishing/Cat)'], fontsize=10, fontweight='bold')
+    ax.set_xticks(range(0, makespan + 3, 2))
+    ax.grid(True, axis='x', linestyle='--', alpha=0.5)
+    plt.tight_layout()
+
+    # Tampilkan grafik matplotlib di web Streamlit
+    st.pyplot(fig)
+else:
+    st.info("Klik tombol merah/biru di atas untuk melihat visualisasi jadwal lini produksi.")
 
 # Tampilkan grafik matplotlib di web Streamlit
 st.pyplot(fig)
