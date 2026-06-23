@@ -124,4 +124,4 @@ if st.button("📊 Tampilkan Gantt Chart", type="primary"):
     # Tampilkan grafik matplotlib di web Streamlit
     st.pyplot(fig)
 else:
-    st.info("Klik tombol merah/biru di atas untuk melihat visualisasi jadwal lini produksi.")
+    st.info("Klik tombol merah di atas untuk melihat visualisasi jadwal lini produksi.")
